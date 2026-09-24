@@ -1,0 +1,14 @@
+
+    
+    
+
+select
+    id_marca as unique_field,
+    count(*) as n_records
+
+from [wh_silver].[stg_qbi].[marcas]
+where id_marca is not null
+group by id_marca
+having count(*) > 1
+
+

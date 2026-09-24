@@ -1,0 +1,14 @@
+
+    
+    
+
+select
+    account_code as unique_field,
+    count(*) as n_records
+
+from [wh_gold].[tesoreria].[dim_cuentas]
+where account_code is not null
+group by account_code
+having count(*) > 1
+
+

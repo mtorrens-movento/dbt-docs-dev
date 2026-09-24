@@ -1,0 +1,44 @@
+
+
+
+
+
+
+
+    with grouped_expression as (
+    select
+        
+        case when 
+( 1=1 and ud_km_medio_mensual >= 0 and ud_km_medio_mensual <= 10000
+)
+ then cast(1 as int) else cast(0 as int) end as expression
+    from [wh_silver].[int_vehiculos].[kms_medios]
+    where
+        ud_km_medio_mensual is not null
+    
+    
+
+),
+validation_errors as (
+
+    select
+        *
+    from
+        grouped_expression
+    where
+        
+        
+        expression <> 1
+        
+
+)
+
+select *
+from validation_errors
+
+
+
+
+
+
+
