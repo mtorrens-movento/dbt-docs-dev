@@ -42,7 +42,7 @@ with source_data as (
 		
     nullif(ltrim(rtrim(cast([Referencia] as varchar(255)))), '')
  as referencia_raw
-	from [lh_bronze].[sharepoint_tesoreria].[movimientos_post_07_2026]
+	from [lh_bronze].[sharepoint_tesoreria].[movimientos]
 ),
 
 typed as (

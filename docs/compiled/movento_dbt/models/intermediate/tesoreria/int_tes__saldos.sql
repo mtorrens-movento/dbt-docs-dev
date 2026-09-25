@@ -20,15 +20,41 @@ WITH saldo_inicial_diario AS (
 movimiento_diario AS (
 
     SELECT
-        id_empresa,
-        id_banco,
+        
+    
+
+    
+        try_cast((
+    case
+        when SUBSTRING(id_cuenta, 2, 2) is null then null
+        when upper(left(SUBSTRING(id_cuenta, 2, 2), 1)) = upper('Q')
+            then nullif(substring(SUBSTRING(id_cuenta, 2, 2), 2, len(SUBSTRING(id_cuenta, 2, 2))), '')
+        else SUBSTRING(id_cuenta, 2, 2)
+    end
+    ) as int)
+    
+ AS id_empresa,
+        CAST(SUBSTRING(id_cuenta, 4, 4) AS INT) AS id_banco,
         id_flujo,
         fec_operacion AS fec_saldo,
-        SUM(imp_movimiento_firmado) AS imp_movimiento
-    FROM [wh_silver].[int_tesoreria].[movimientos]
+        SUM(imp_contravalor_firmado) AS imp_movimiento
+    FROM [wh_silver].[stg_shp_tes].[movimientos]
     GROUP BY
-        id_empresa,
-        id_banco,
+        
+    
+
+    
+        try_cast((
+    case
+        when SUBSTRING(id_cuenta, 2, 2) is null then null
+        when upper(left(SUBSTRING(id_cuenta, 2, 2), 1)) = upper('Q')
+            then nullif(substring(SUBSTRING(id_cuenta, 2, 2), 2, len(SUBSTRING(id_cuenta, 2, 2))), '')
+        else SUBSTRING(id_cuenta, 2, 2)
+    end
+    ) as int)
+    
+,
+        CAST(SUBSTRING(id_cuenta, 4, 4) AS INT),
         id_flujo,
         fec_operacion
 
@@ -57,17 +83,7 @@ rango_fechas_global AS (
     SELECT
         MIN(fec_operacion) AS min_fec_saldo,
         MAX(fec_operacion) AS max_fec_saldo
-    FROM (
-        SELECT
-            fec_operacion
-        FROM [wh_silver].[stg_shp_tes].[movimientos_pre_07_2026]
-
-        UNION ALL
-
-        SELECT
-            fec_operacion
-        FROM [wh_silver].[stg_shp_tes].[movimientos_post_07_2026]
-    ) AS movimientos_stg
+    FROM [wh_silver].[stg_shp_tes].[movimientos]
 
 ),
 

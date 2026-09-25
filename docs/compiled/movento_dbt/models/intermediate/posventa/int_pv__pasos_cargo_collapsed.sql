@@ -88,7 +88,7 @@ select
     r.des_estado_or,
     r.aud_dte_snapshot,
     r.aud_tst_ingestion,
-    cast(coalesce(r.aud_tst_ingestion, cast(r.aud_dte_snapshot as datetime2(0)), cast('2026-09-25 11:30:52' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(r.aud_tst_ingestion, cast(r.aud_dte_snapshot as datetime2(0)), cast('2026-09-25 12:49:51' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from ranked r
 left join agregados_or_cargo a
     on a.id_orden_reparacion = r.id_orden_reparacion
