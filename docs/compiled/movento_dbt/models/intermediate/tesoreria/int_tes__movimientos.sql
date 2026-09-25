@@ -28,7 +28,20 @@ movimientos_post AS (
 
     SELECT
         CAST(SUBSTRING(id_cuenta, 4, 4) AS INT) AS id_banco,
-        SUBSTRING(id_cuenta, 2, 2) AS id_empresa,
+        
+    
+
+    
+        try_cast((
+    case
+        when SUBSTRING(id_cuenta, 2, 2) is null then null
+        when upper(left(SUBSTRING(id_cuenta, 2, 2), 1)) = upper('Q')
+            then nullif(substring(SUBSTRING(id_cuenta, 2, 2), 2, len(SUBSTRING(id_cuenta, 2, 2))), '')
+        else SUBSTRING(id_cuenta, 2, 2)
+    end
+    ) as int)
+    
+ AS id_empresa,
         id_flujo,
         fec_operacion,
         fec_valor,

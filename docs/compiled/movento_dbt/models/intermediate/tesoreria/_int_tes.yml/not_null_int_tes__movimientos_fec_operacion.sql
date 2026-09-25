@@ -5,7 +5,7 @@
 
 
 select fec_operacion
-from [wh_silver].[int_tesoreria].[int_tes__movimientos]
+from [wh_silver].[int_tesoreria].[movimientos]
 where fec_operacion is null
 
 

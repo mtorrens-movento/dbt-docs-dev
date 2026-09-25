@@ -9,7 +9,7 @@
     select
         
         case when 
-( 1=1 and fec_cierre_or >= cast('1950-01-01' as date) and fec_cierre_or <= cast('2026-09-24' as date)
+( 1=1 and fec_cierre_or >= cast('1950-01-01' as date) and fec_cierre_or <= cast('2026-09-25' as date)
 )
  then cast(1 as int) else cast(0 as int) end as expression
     from [wh_silver].[stg_qbi].[pasos_taller_cerrados]

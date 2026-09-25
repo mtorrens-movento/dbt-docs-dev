@@ -5,6 +5,7 @@ SELECT
     id_persona,
     nom_persona,
     eml_persona,
+    alias,
     fec_alta,
     fec_baja,
     id_empresa,

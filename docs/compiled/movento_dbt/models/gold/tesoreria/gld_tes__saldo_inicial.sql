@@ -1,27 +1,27 @@
 
 
 SELECT
-    id_banco AS bank_code,
-    des_banco AS bank_desc,
-    id_empresa AS company_code,
-    des_empresa AS company_desc,
-    id_flujo AS flow_code,
+    id_banco,
+    des_banco,
+    id_empresa,
+    des_empresa,
+    id_flujo,
 
-    CAST(CONVERT(CHAR(8), fec_operacion, 112) AS INT) AS movement_date_key,
-    CAST(CONVERT(CHAR(8), fec_valor, 112) AS INT) AS book_date_key,
-    fec_operacion AS movement_date,
-    fec_valor AS book_date,
+    CAST(CONVERT(CHAR(8), fec_operacion, 112) AS INT) AS id_fecha_operacion,
+    CAST(CONVERT(CHAR(8), fec_valor, 112) AS INT) AS id_fecha_valor,
+    fec_operacion,
+    fec_valor,
 
-    imp_movimiento_firmado AS signed_amount,
+    imp_movimiento_firmado,
     imp_signo_div_cuenta AS importe_signo_div_cuenta,
-    des_movimiento AS movement_description,
-    id_referencia AS referencia,
+    des_movimiento,
+    id_referencia,
     des_info_adicional_1,
     des_info_adicional_2,
     des_info_adicional_3,
     des_info_adicional_4,
         CAST(
-        '2026-09-24 10:05:02'
+        '2026-09-25 13:30:52'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 

@@ -45,6 +45,19 @@ final_select as (
         
     nullif(ltrim(rtrim(cast(email as varchar(255)))), '')
  as eml_persona,
+        case
+            when charindex('@', 
+    nullif(ltrim(rtrim(cast(email as varchar(255)))), '')
+) > 0
+            then lower(left(
+            
+    nullif(ltrim(rtrim(cast(email as varchar(255)))), '')
+,
+            charindex('@', 
+    nullif(ltrim(rtrim(cast(email as varchar(255)))), '')
+) - 1
+            ))
+        end as alias,
         try_cast(fecha_alta as date) as fec_alta,
         try_cast(fecha_baja as date) as fec_baja,
         try_cast(empresa as int) as id_empresa,
@@ -88,5 +101,5 @@ final_select as (
 
 select
     final_select.*,
-    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-09-24 08:05:02' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-09-25 11:30:52' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from final_select

@@ -5,7 +5,7 @@
 
 
 select id_banco
-from [wh_silver].[int_tesoreria].[int_tes__movimientos]
+from [wh_silver].[int_tesoreria].[movimientos]
 where id_banco is null
 
 

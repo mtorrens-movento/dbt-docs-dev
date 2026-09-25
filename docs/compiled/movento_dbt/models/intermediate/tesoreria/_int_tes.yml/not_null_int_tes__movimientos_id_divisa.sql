@@ -5,7 +5,7 @@
 
 
 select id_divisa
-from [wh_silver].[int_tesoreria].[int_tes__movimientos]
+from [wh_silver].[int_tesoreria].[movimientos]
 where id_divisa is null
 
 

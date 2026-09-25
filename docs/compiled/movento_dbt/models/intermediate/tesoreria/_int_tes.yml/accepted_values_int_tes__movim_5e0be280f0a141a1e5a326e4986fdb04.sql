@@ -8,7 +8,7 @@ with all_values as (
         origen_movimiento as value_field,
         count(*) as n_records
 
-    from [wh_silver].[int_tesoreria].[int_tes__movimientos]
+    from [wh_silver].[int_tesoreria].[movimientos]
     group by origen_movimiento
 
 )
