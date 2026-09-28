@@ -5,7 +5,7 @@
 
 select
     id_marca,
-    id_combustible,
+    id_grupo_combustible,
     id_tipo_intervencion,
     meses,
     kms
