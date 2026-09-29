@@ -27,7 +27,7 @@ SELECT
     sum_tiempo_or AS ud_horas_facturadas,
 
     CAST(
-        '2026-09-29 16:49:29'
+        '2026-09-29 17:52:45'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[int_posventa].[pasos_cargo_collapsed]
