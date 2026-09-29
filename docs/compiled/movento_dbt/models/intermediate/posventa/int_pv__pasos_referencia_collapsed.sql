@@ -21,15 +21,49 @@ with base as (
     where id_orden_reparacion is not null
 ),
 
-agregados_or as (
+-- Los importes son del cargo y vienen repetidos en cada una de sus lineas: se
+-- toma uno por cargo y despues se suman los cargos de la OR. Sumar las lineas
+-- directamente multiplicaria el importe por el numero de lineas de cada cargo.
+importes_cargo as (
     select
         id_orden_reparacion,
-        max(fec_cierre_or) as max_fecha_cierre,
-        sum(coalesce(imp_total_mano_obra, 0)) as sum_total_mo,
-        sum(coalesce(imp_total_materiales, 0)) as sum_total_recambios
+        id_cargo,
+        max(coalesce(imp_total_mano_obra, 0)) as imp_mano_obra,
+        max(coalesce(imp_total_materiales, 0)) as imp_materiales
+    from base
+    group by
+        id_orden_reparacion,
+        id_cargo
+),
+
+fecha_cierre_or as (
+    select
+        id_orden_reparacion,
+        max(fec_cierre_or) as max_fecha_cierre
     from base
     group by
         id_orden_reparacion
+),
+
+importes_or as (
+    select
+        id_orden_reparacion,
+        sum(imp_mano_obra) as sum_total_mo,
+        sum(imp_materiales) as sum_total_recambios
+    from importes_cargo
+    group by
+        id_orden_reparacion
+),
+
+agregados_or as (
+    select
+        f.id_orden_reparacion,
+        f.max_fecha_cierre,
+        i.sum_total_mo,
+        i.sum_total_recambios
+    from fecha_cierre_or f
+    left join importes_or i
+        on i.id_orden_reparacion = f.id_orden_reparacion
 ),
 
 ranked as (
@@ -69,7 +103,7 @@ select
     r.des_marca,
     r.aud_dte_snapshot,
     r.aud_tst_ingestion,
-    cast(coalesce(r.aud_tst_ingestion, cast(r.aud_dte_snapshot as datetime2(0)), cast('2026-09-29 10:39:35' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(r.aud_tst_ingestion, cast(r.aud_dte_snapshot as datetime2(0)), cast('2026-09-29 14:49:29' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from ranked r
 left join agregados_or a
     on a.id_orden_reparacion = r.id_orden_reparacion

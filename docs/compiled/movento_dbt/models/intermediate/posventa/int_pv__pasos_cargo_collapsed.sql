@@ -17,6 +17,7 @@ with base as (
         ud_km_or,
         imp_total_mano_obra,
         imp_total_materiales,
+        ud_tiempo_or,
         cat_estado_or,
         des_estado_or,
         seq_linea_or,
@@ -27,12 +28,17 @@ with base as (
       and id_cargo is not null
 ),
 
+-- Los importes son del cargo y vienen repetidos en cada una de sus lineas, asi
+-- que se toma uno por cargo: sumarlos multiplicaria el importe por el numero de
+-- lineas. Las horas, en cambio, son de cada linea y se suman. Se mantienen los
+-- nombres sum_total_* porque los usan los snapshots.
 agregados_or_cargo as (
     select
         id_orden_reparacion,
         id_cargo,
-        sum(coalesce(imp_total_mano_obra, 0)) as sum_total_mo,
-        sum(coalesce(imp_total_materiales, 0)) as sum_total_recambios
+        max(coalesce(imp_total_mano_obra, 0)) as sum_total_mo,
+        max(coalesce(imp_total_materiales, 0)) as sum_total_recambios,
+        sum(coalesce(ud_tiempo_or, 0)) as sum_tiempo_or
     from base
     group by
         id_orden_reparacion,
@@ -79,6 +85,7 @@ select
     r.tpo_facturacion,
     a.sum_total_mo,
     a.sum_total_recambios,
+    a.sum_tiempo_or,
     r.cod_marca,
     r.des_marca,
     r.id_vehiculo,
@@ -88,7 +95,7 @@ select
     r.des_estado_or,
     r.aud_dte_snapshot,
     r.aud_tst_ingestion,
-    cast(coalesce(r.aud_tst_ingestion, cast(r.aud_dte_snapshot as datetime2(0)), cast('2026-09-29 10:39:35' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(r.aud_tst_ingestion, cast(r.aud_dte_snapshot as datetime2(0)), cast('2026-09-29 14:49:29' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from ranked r
 left join agregados_or_cargo a
     on a.id_orden_reparacion = r.id_orden_reparacion
