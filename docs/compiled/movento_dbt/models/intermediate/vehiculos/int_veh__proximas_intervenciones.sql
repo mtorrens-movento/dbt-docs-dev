@@ -217,5 +217,5 @@ final as (
 
 select
     f.*, 
-    cast(coalesce(f.aud_tst_ingestion, cast(f.aud_dte_snapshot as datetime2(0)), cast('2026-09-28 08:57:51' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(f.aud_tst_ingestion, cast(f.aud_dte_snapshot as datetime2(0)), cast('2026-09-29 10:39:35' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from final f
