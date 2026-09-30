@@ -1,8 +1,8 @@
 
 
--- Tabla de hechos de taller para los KPIs de postventa. Una fila por OR y cargo:
--- una OR con varios cargos tiene varias filas, asi que las entradas se cuentan
--- con count(distinct id_orden_reparacion) y no con count(*).
+-- Tabla de hechos de taller a nivel de OR y cargo, para las entradas de taller. Las
+-- horas y los importes no van aqui sino en facts_or_mo, que tiene el grano de linea
+-- con el que se calculan.
 
 SELECT
     id_orden_reparacion,
@@ -22,12 +22,8 @@ SELECT
     num_factura,
     ud_km_or,
 
-    sum_total_mo AS imp_mano_obra,
-    sum_total_recambios AS imp_materiales,
-    sum_tiempo_or AS ud_horas_facturadas,
-
     CAST(
-        '2026-09-29 17:52:45'
+        '2026-09-30 17:49:59'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[int_posventa].[pasos_cargo_collapsed]
