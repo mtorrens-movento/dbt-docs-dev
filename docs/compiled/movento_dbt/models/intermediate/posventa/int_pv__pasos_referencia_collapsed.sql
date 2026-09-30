@@ -187,7 +187,7 @@ select
     i.ind_or_cerrada,
     r.aud_dte_snapshot,
     r.aud_tst_ingestion,
-    cast(coalesce(r.aud_tst_ingestion, cast(r.aud_dte_snapshot as datetime2(0)), cast('2026-09-30 15:49:59' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(r.aud_tst_ingestion, cast(r.aud_dte_snapshot as datetime2(0)), cast('2026-09-30 16:04:18' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from ranked r
 left join agregados_or a
     on a.id_orden_reparacion = r.id_orden_reparacion
