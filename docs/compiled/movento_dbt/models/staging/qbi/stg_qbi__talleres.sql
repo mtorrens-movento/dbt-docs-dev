@@ -73,5 +73,5 @@ final_select as (
 )
 select
     final_select.*,
-    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-09-30 16:04:18' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-01 06:46:42' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from final_select
