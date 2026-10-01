@@ -29,8 +29,8 @@ typed as (
 		canal_venta_raw as canal_venta,
 		try_cast(id_agrup_canal_raw as int) as id_agrup_canal,
 		desc_agrup_canal_raw as desc_agrup_canal,
-		case no_informado_raw when 'S' then cast(1 as bit) when 'N' then cast(0 as bit) end as no_informado,
-		case no_contabiliza_raw when 'S' then cast(1 as bit) when 'N' then cast(0 as bit) end as no_contabiliza
+		try_cast(no_informado_raw as bit) as no_informado,
+		try_cast(no_contabiliza_raw as bit) as no_contabiliza
 	from source_data
 )
 
