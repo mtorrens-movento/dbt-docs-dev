@@ -51,7 +51,7 @@ SELECT
     END AS ud_entradas,
 
     CAST(
-        '2026-10-01 17:00:31'
+        '2026-10-01 17:19:04'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM cargos
