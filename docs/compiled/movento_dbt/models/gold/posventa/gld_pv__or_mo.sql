@@ -23,7 +23,7 @@ SELECT
     imp_total_linea AS imp_mano_obra,
 
     CAST(
-        '2026-10-01 17:50:39'
+        '2026-10-01 17:59:50'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[stg_qbi].[pasos_taller_cerrados]
