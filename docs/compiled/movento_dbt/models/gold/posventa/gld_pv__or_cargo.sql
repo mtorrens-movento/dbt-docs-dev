@@ -23,7 +23,7 @@ SELECT
     ud_km_or,
 
     CAST(
-        '2026-10-01 13:27:36'
+        '2026-10-01 15:55:16'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[int_posventa].[pasos_cargo_collapsed]
