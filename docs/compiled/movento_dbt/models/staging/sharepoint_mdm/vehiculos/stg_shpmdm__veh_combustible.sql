@@ -29,8 +29,8 @@ typed as (
 		des_combustible_raw as des_combustible,
 		try_cast(id_grupo_combustible_raw as int) as id_grupo_combustible,
 		des_grupo_combustible_raw as des_grupo_combustible,
-		try_cast(no_informado_raw as bit) as no_informado,
-		try_cast(no_contabiliza_raw as bit) as no_contabiliza
+		case no_informado_raw when 'S' then cast(1 as bit) when 'N' then cast(0 as bit) end as no_informado,
+		case no_contabiliza_raw when 'S' then cast(1 as bit) when 'N' then cast(0 as bit) end as no_contabiliza
 	from source_data
 )
 
