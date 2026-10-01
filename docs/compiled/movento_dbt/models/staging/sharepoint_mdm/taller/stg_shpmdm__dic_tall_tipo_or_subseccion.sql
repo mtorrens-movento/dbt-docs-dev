@@ -6,25 +6,25 @@ with source_data as (
     nullif(ltrim(rtrim(cast([tipo_or] as varchar(100)))), '')
  as tipo_or_raw,
 		
-    nullif(ltrim(rtrim(cast([id_seccion_taller] as varchar(100)))), '')
- as id_seccion_taller_raw,
+    nullif(ltrim(rtrim(cast([id_subseccion_taller] as varchar(100)))), '')
+ as id_subseccion_taller_raw,
 		
-    nullif(ltrim(rtrim(cast([desc_seccion_taller] as varchar(255)))), '')
- as desc_seccion_taller_raw,
+    nullif(ltrim(rtrim(cast([desc_subseccion_taller] as varchar(255)))), '')
+ as desc_subseccion_taller_raw,
 		
     nullif(ltrim(rtrim(cast([fec_ini] as varchar(100)))), '')
  as fec_ini_raw,
 		
     nullif(ltrim(rtrim(cast([fec_fin] as varchar(100)))), '')
  as fec_fin_raw
-	from [lh_bronze].[sharepoint_mdm].[dic_tall_tipo_or_seccion]
+	from [lh_bronze].[sharepoint_mdm].[dic_tall_tipo_or_subseccion]
 ),
 
 typed as (
 	select
 		tipo_or_raw as tipo_or,
-		try_cast(id_seccion_taller_raw as int) as id_seccion_taller,
-		desc_seccion_taller_raw as desc_seccion_taller,
+		try_cast(id_subseccion_taller_raw as int) as id_subseccion_taller,
+		desc_subseccion_taller_raw as desc_subseccion_taller,
 		
     coalesce(
         try_cast(fec_ini_raw as date),
@@ -44,8 +44,8 @@ typed as (
 
 select distinct
 	tipo_or,
-	id_seccion_taller,
-	desc_seccion_taller,
+	id_subseccion_taller,
+	desc_subseccion_taller,
 	fec_ini,
 	fec_fin
 from typed

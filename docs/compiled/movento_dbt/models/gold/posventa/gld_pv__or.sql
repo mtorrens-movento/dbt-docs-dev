@@ -208,7 +208,7 @@ SELECT
     
 
     CAST(
-        '2026-10-01 08:46:42'
+        '2026-10-01 11:57:08'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[int_posventa].[pasos_referencia_collapsed]

@@ -95,5 +95,5 @@ select
     ) as ud_km_medio_mensual,
     aud_dte_snapshot,
     aud_tst_ingestion,
-    cast(coalesce(aud_tst_ingestion, cast(aud_dte_snapshot as datetime2(0)), cast('2026-10-01 06:46:42' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(aud_tst_ingestion, cast(aud_dte_snapshot as datetime2(0)), cast('2026-10-01 09:57:08' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from edad_vehiculo
