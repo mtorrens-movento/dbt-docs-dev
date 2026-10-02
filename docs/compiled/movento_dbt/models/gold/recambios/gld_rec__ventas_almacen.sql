@@ -16,7 +16,7 @@ SELECT
     fec_movimiento,
 
     id_almacen,
-    id_marca_contable AS cod_marca,
+    cod_marca_contable AS cod_marca,
     TRY_CAST(cod_marca_almacen AS INT) AS cod_marca_almacen,
     tpo_venta,
 
@@ -24,7 +24,7 @@ SELECT
     imp_total_linea AS imp_venta,
 
     CAST(
-        '2026-10-02 10:01:20'
+        '2026-10-02 14:54:33'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[stg_qbi].[ventas_almacen]

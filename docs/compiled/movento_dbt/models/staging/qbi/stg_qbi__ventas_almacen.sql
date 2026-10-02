@@ -3,9 +3,8 @@
 with source_data as (
     select *
     
-        from [lh_bronze].[qbi_incremental].[ftsabi_pr]
-        where _snapshot_date > (select max(aud_dte_snapshot) from [wh_silver].[stg_qbi].[ventas_almacen])
-          and  _ingestion_tst > (select max(aud_tst_ingestion) from [wh_silver].[stg_qbi].[ventas_almacen])
+        from [lh_bronze].[qbi_historico].[ftsabi_pr]
+        where _snapshot_date = (select max(_snapshot_date) from [lh_bronze].[qbi_historico].[ftsabi_pr])
     
 
 ),
@@ -126,7 +125,7 @@ final_select as (
         
     nullif(ltrim(rtrim(cast(des_grupo as varchar(255)))), '')
  as des_grupo_neumaticos,
-        try_cast(marca_contable as int) as id_marca_contable,
+        try_cast(marca_contable as int) as cod_marca_contable,
         
     nullif(ltrim(rtrim(cast(des_marca_contable as varchar(255)))), '')
  as des_marca_contable,
@@ -294,5 +293,5 @@ final_select as (
 
 select
     final_select.*,
-    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-02 08:01:20' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-02 12:54:33' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from final_select

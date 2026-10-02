@@ -211,7 +211,7 @@ SELECT
     des_flujo,
     id_fecha,
     fec_saldo,
-    imp_saldo_inicial,
-    imp_movimiento,
-    imp_saldo
+    CAST(imp_saldo_inicial AS DECIMAL(18, 2)) AS imp_saldo_inicial,
+    CAST(imp_movimiento AS DECIMAL(18, 2)) AS imp_movimiento,
+    CAST(imp_saldo AS DECIMAL(18, 2)) AS imp_saldo
 FROM saldos_diarios
