@@ -39,6 +39,24 @@ calendar AS (
     CROSS JOIN date_bounds AS b
     WHERE n.n <= DATEDIFF(DAY, b.start_date, b.end_date)
 
+),
+
+-- Viernes Santo de cada año: domingo de Pascua (algoritmo de Meeus/Butcher) menos 2 días
+viernes_santo AS (
+
+    SELECT
+        y.anio,
+        DATEADD(DAY, -2, DATEFROMPARTS(
+            y.anio,
+            (h + l - 7 * m + 114) / 31,
+            (h + l - 7 * m + 114) % 31 + 1
+        )) AS fecha_viernes_santo
+    FROM (SELECT DISTINCT YEAR(calendar_date) AS anio FROM calendar) AS y
+    CROSS APPLY (SELECT y.anio % 19 AS a, y.anio / 100 AS b, y.anio % 100 AS c) AS s1
+    CROSS APPLY (SELECT (19 * a + b - b / 4 - (b - (b + 8) / 25 + 1) / 3 + 15) % 30 AS h) AS s2
+    CROSS APPLY (SELECT (32 + 2 * (b % 4) + 2 * (c / 4) - h - c % 4) % 7 AS l) AS s3
+    CROSS APPLY (SELECT (a + 11 * h + 22 * l) / 451 AS m) AS s4
+
 )
 
 SELECT
@@ -84,5 +102,15 @@ SELECT
         WHEN (DATEDIFF(DAY, CAST('19000101' AS DATE), calendar_date) % 7) + 1 IN (6, 7)
             THEN CAST(1 AS BIT)
         ELSE CAST(0 AS BIT)
-    END AS es_fin_semana
+    END AS es_fin_semana,
+    -- Festivos nacionales de España (fecha fija + Viernes Santo). Sin autonómicos ni locales.
+    CASE
+        WHEN MONTH(calendar_date) * 100 + DAY(calendar_date)
+             IN (101, 106, 501, 815, 1012, 1101, 1206, 1208, 1225)
+          OR calendar_date = vs.fecha_viernes_santo
+            THEN CAST(1 AS BIT)
+        ELSE CAST(0 AS BIT)
+    END AS es_festivo
 FROM calendar
+INNER JOIN viernes_santo AS vs
+    ON vs.anio = YEAR(calendar_date)
