@@ -15,7 +15,7 @@ select
     des_familia,
     ud_km,
     fec_matriculacion,
-    tpo_motor,
+    id_motor,
     des_tipo_motor,
     id_combustible,
     des_tipo_combustible,

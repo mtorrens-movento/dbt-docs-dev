@@ -7,7 +7,7 @@ where (
     or
     fec_matriculacion < cast('1950-01-01' as date)
     or
-    fec_matriculacion > cast('2026-10-02' as date)
+    fec_matriculacion > cast('2026-10-05' as date)
 )
   and fec_matriculacion is not null
 

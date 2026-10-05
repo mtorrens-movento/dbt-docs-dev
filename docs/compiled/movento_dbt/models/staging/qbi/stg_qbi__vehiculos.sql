@@ -182,7 +182,7 @@ final_select as (
         try_cast(fecha_categoria as date) as fec_categoria_vehiculo,
         
     nullif(ltrim(rtrim(cast(tipo_motor as varchar(255)))), '')
- as tpo_motor,
+ as id_motor,
         
     nullif(ltrim(rtrim(cast(des_tipo_motor as varchar(255)))), '')
  as des_tipo_motor,
@@ -275,5 +275,5 @@ final_select as (
 
 select
     final_select.*,
-    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-02 12:54:33' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-05 06:44:09' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from final_select

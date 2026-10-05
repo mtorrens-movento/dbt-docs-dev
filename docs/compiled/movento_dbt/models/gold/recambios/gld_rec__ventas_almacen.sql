@@ -24,7 +24,7 @@ SELECT
     imp_total_linea AS imp_venta,
 
     CAST(
-        '2026-10-02 14:54:33'
+        '2026-10-05 08:44:09'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[stg_qbi].[ventas_almacen]
