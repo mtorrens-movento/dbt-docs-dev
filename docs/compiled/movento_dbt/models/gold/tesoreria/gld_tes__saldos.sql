@@ -13,7 +13,7 @@ SELECT
     imp_movimiento,
     imp_saldo,
     CAST(
-        '2026-10-05 16:58:38'
+        '2026-10-05 17:39:53'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[int_tesoreria].[saldos]
