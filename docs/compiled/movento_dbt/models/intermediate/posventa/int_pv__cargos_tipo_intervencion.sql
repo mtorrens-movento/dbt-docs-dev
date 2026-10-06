@@ -143,7 +143,7 @@ select
     d.des_articulo,
     d.aud_dte_snapshot,
     d.aud_tst_ingestion,
-    cast(coalesce(d.aud_tst_ingestion, cast(d.aud_dte_snapshot as datetime2(0)), cast('2026-10-06 06:55:43' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(d.aud_tst_ingestion, cast(d.aud_dte_snapshot as datetime2(0)), cast('2026-10-06 07:05:37' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from dedup d
 inner join [wh_silver].[stg_shp_mdm].[pv_tipos_inter] ti
     on ti.id_tipo_intervencion = d.id_tipo_intervencion

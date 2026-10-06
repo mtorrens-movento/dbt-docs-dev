@@ -40,7 +40,7 @@ SELECT
     END AS ind_venta_exterior,
 
     CAST(
-        '2026-10-06 08:55:43'
+        '2026-10-06 09:05:37'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[stg_qbi].[ventas_almacen]
