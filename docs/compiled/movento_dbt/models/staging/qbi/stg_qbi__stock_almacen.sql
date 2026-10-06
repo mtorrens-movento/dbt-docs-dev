@@ -1,26 +1,27 @@
 
 
-with latest_cutoff as (
-    select top 1
-        _snapshot_date as max_snapshot_date,
-        _ingestion_tst as max_ingestion_tst
+with source_data as (
+    select *
     from [lh_bronze].[qbi_incremental].[fhmabi_pr]
-    order by _snapshot_date desc, _ingestion_tst desc
-),
-
-source_data as (
-    select src.*
-    from [lh_bronze].[qbi_incremental].[fhmabi_pr] as src
-    inner join latest_cutoff as cut
-        on src._snapshot_date = cut.max_snapshot_date
-       and src._ingestion_tst = cut.max_ingestion_tst
+    
+    where _snapshot_date > (select max(aud_dte_snapshot) from [wh_silver].[stg_qbi].[stock_almacen])
+       or (
+            _snapshot_date = (select max(aud_dte_snapshot) from [wh_silver].[stg_qbi].[stock_almacen])
+        and _ingestion_tst > (
+            select max(aud_tst_ingestion)
+            from [wh_silver].[stg_qbi].[stock_almacen]
+            where aud_dte_snapshot = (select max(aud_dte_snapshot) from [wh_silver].[stg_qbi].[stock_almacen])
+        )
+       )
+    
+    -- Si se hace full refresh, se seleccionara el registro mas frecuente por id_fila_tecnica y el snapshot_date
 ),
 
 con_rn as (
     select
         *,
         row_number() over (
-            partition by refx
+            partition by _snapshot_date, refx
             order by _ingestion_tst desc
         ) as rn
     from source_data
@@ -82,8 +83,8 @@ final_select as (
         try_cast(existencias as decimal(18, 2)) as ud_existencias,
         try_cast(exis_bope as int) as ud_existencias_bope,
         try_cast(pvp as decimal(18, 2)) as imp_pvp_unitario,
-        try_cast(costo_medio as decimal(18, 2)) as imp_costo_medio_unitario,
-        try_cast(costo_ultimo as decimal(18, 2)) as imp_costo_ultimo_unitario,
+        try_cast(costo_medio as decimal(18, 8)) as imp_costo_medio_unitario,
+        try_cast(costo_ultimo as decimal(18, 8)) as imp_costo_ultimo_unitario,
         
     nullif(ltrim(rtrim(cast(moneda as varchar(255)))), '')
  as cat_moneda,
@@ -143,5 +144,5 @@ final_select as (
 
 select
     final_select.*,
-    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-06 07:05:37' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-06 11:53:20' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from final_select
