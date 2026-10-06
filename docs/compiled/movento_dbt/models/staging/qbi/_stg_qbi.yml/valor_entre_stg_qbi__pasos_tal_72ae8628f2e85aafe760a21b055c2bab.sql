@@ -7,6 +7,6 @@ where (
     or
     fec_cierre_or < cast('1950-01-01' as date)
     or
-    fec_cierre_or > cast('2026-10-05' as date)
+    fec_cierre_or > cast('2026-10-06' as date)
 )
 
