@@ -1,27 +1,29 @@
 
 
-with latest_cutoff as (
-    select top 1
-        _snapshot_date as max_snapshot_date,
-        _ingestion_tst as max_ingestion_tst
-    from [lh_bronze].[qbi_incremental].[ftsvembi2_pr]
-    order by _snapshot_date desc, _ingestion_tst desc
-),
-
-source_data as (
-    select src.*
+with source_data as (
+    select
+        src.*,
+        cast(1 as int) as src_priority
+    
     from [lh_bronze].[qbi_incremental].[ftsvembi2_pr] as src
-    inner join latest_cutoff as cut
-        on src._snapshot_date = cut.max_snapshot_date
-       and src._ingestion_tst = cut.max_ingestion_tst
+    where _snapshot_date > (select max(aud_dte_snapshot) from [wh_silver].[stg_qbi].[stock_vo])
+       or (
+            _snapshot_date = (select max(aud_dte_snapshot) from [wh_silver].[stg_qbi].[stock_vo])
+        and _ingestion_tst > (
+            select max(aud_tst_ingestion)
+            from [wh_silver].[stg_qbi].[stock_vo]
+            where aud_dte_snapshot = (select max(aud_dte_snapshot) from [wh_silver].[stg_qbi].[stock_vo])
+        )
+       )
+    
 ),
 
 con_rn as (
     select
         *,
         row_number() over (
-            partition by idv
-            order by _ingestion_tst desc
+            partition by cast(fecha as date), idv
+            order by _snapshot_date desc, _ingestion_tst desc, src_priority desc
         ) as rn
     from source_data
     where idv is not null
@@ -211,5 +213,5 @@ final_select as (
 
 select
     final_select.*,
-    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-06 16:31:18' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-07 07:07:40' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from final_select

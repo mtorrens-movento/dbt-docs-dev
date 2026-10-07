@@ -27,7 +27,7 @@ SELECT
 	vn.des_motivo_contabiliza_stock,
 	vn.ind_contabiliza_stock,
 	CAST(
-		'2026-10-06 18:31:18'
+		'2026-10-07 09:07:40'
 		AS DATETIME2(0)
 	) AS _gold_load_ts
 FROM [wh_silver].[int_vn].[stock_enriquecido] AS vn

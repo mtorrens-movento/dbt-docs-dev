@@ -1,0 +1,27 @@
+
+
+select
+	vo.id_fila_tecnica,
+	cast(convert(char(8), vo.fec_stock, 112) as int) as id_fecha_stock,
+	vo.fec_stock,
+	vo.id_vehiculo,
+	vo.id_concesionario,
+	vo.nom_concesionario,
+	vo.desc_abr_marca,
+	vo.num_matricula,
+	vo.num_bastidor,
+	vo.cod_familia,
+	vo.tpo_vo,
+	vo.des_tipo_vo,
+	vo.id_canal_origen,
+	vo.desc_canal_origen,
+	vo.des_motivo_contabiliza_stock,
+	vo.ind_contabiliza_stock,
+	vo.ud_unidades,
+	vo.imp_compra,
+	vo.imp_costo,
+	cast(
+		'2026-10-07 09:07:40'
+		as datetime2(0)
+	) as _gold_load_ts
+from [wh_silver].[int_vo].[stock_enriquecido] as vo
