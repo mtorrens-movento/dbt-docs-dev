@@ -10,6 +10,9 @@
 -- deferencia (imp_venta_pvp) y cuenta solo las lineas con ind_venta_exterior: las que no
 -- salen a taller, sin los traspasos internos ni la venta interna de mostrador. Los
 -- recambios a taller no salen de aqui sino de int_pv__or_cargo, por la OR.
+--
+-- imp_venta_coste es el coste de la linea. Es la venta que se compara con el stock, que
+-- tambien esta valorado a coste, para la rotacion de stock.
 
 
 
@@ -27,6 +30,7 @@ SELECT
     imp_total_linea AS imp_venta,
     ROUND(ud_unidades_venta * imp_pvp_unitario * (1 - rat_descuento_deferencia / 100), 2)
         AS imp_venta_pvp,
+    imp_costo_linea AS imp_venta_coste,
 
     CASE
         WHEN COALESCE(ref_ind_salida_taller, 'N') = 'N'
