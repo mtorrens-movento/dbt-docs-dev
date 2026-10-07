@@ -20,13 +20,13 @@ SELECT
     ven.id_vendedor,
     ven.nom_vendedor,
     ven.id_tipo_vendedor,
-    ven.desc_tipo_vendedor,
+    ven.des_tipo_vendedor,
     vo.id_vehiculo,
     vo.tpo_venta,
     vo.des_tipo_venta,
     vo.id_cuenta_cliente,
     can.id_canal_venta,
-    can.desc_canal_venta,
+    can.des_canal_venta,
     CASE
         WHEN COALESCE(ven.no_contabiliza, CAST(0 AS BIT)) = CAST(1 AS BIT) THEN 'vendedor_no_contabilizable'
         WHEN COALESCE(subcan.no_contabiliza, CAST(0 AS BIT)) = CAST(1 AS BIT) THEN 'subcanal_no_contabilizable'
@@ -61,7 +61,7 @@ OUTER APPLY (
         v.id_vendedor,
         v.nom_vendedor,
         v.id_tipo_vendedor,
-        v.desc_tipo_vendedor,
+        v.des_tipo_vendedor,
         v.no_contabiliza
     FROM [wh_silver].[stg_shp_mdm].[com_vendedores] AS v
     WHERE v.id_vendedor = ven_dic.id_ven_org

@@ -10,7 +10,7 @@ with source_data as (
  as id_servicio_taller_raw,
 		
     nullif(ltrim(rtrim(cast([desc_servicio_taller] as varchar(255)))), '')
- as desc_servicio_taller_raw,
+ as des_servicio_taller_raw,
 		
     nullif(ltrim(rtrim(cast([fec_ini] as varchar(100)))), '')
  as fec_ini_raw,
@@ -24,7 +24,7 @@ typed as (
 	select
 		tipo_mo_raw as tipo_mo,
 		try_cast(id_servicio_taller_raw as int) as id_servicio_taller,
-		desc_servicio_taller_raw as desc_servicio_taller,
+		des_servicio_taller_raw as des_servicio_taller,
 		
     coalesce(
         try_cast(fec_ini_raw as date),
@@ -45,7 +45,7 @@ typed as (
 select distinct
 	tipo_mo,
 	id_servicio_taller,
-	desc_servicio_taller,
+	des_servicio_taller,
 	fec_ini,
 	fec_fin
 from typed

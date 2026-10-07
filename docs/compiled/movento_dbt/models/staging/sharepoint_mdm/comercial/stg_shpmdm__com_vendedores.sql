@@ -13,7 +13,7 @@ with source_data as (
  as id_tipo_vendedor_raw,
 		
     nullif(ltrim(rtrim(cast([desc_tipo_vendedor] as varchar(255)))), '')
- as desc_tipo_vendedor_raw,
+ as des_tipo_vendedor_raw,
 		
     nullif(ltrim(rtrim(cast([fec_ini] as varchar(100)))), '')
  as fec_ini_raw,
@@ -37,7 +37,7 @@ typed as (
 		id_vendedor_raw as id_vendedor,
 		nom_vendedor_raw as nom_vendedor,
 		try_cast(id_tipo_vendedor_raw as int) as id_tipo_vendedor,
-		desc_tipo_vendedor_raw as desc_tipo_vendedor,
+		des_tipo_vendedor_raw as des_tipo_vendedor,
 		
     coalesce(
         try_cast(fec_ini_raw as date),
@@ -62,7 +62,7 @@ select distinct
 	id_vendedor,
 	nom_vendedor,
 	id_tipo_vendedor,
-	desc_tipo_vendedor,
+	des_tipo_vendedor,
 	fec_ini,
 	fec_fin,
 	observaciones,

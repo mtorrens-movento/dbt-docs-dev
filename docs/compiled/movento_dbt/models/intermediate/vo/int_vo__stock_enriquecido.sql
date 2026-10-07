@@ -12,8 +12,35 @@ select
     sv.cod_familia,
     sv.tpo_vo,
     sv.des_tipo_vo,
+    case
+        when sv.tpo_vo in ('7', '8', '08') then (
+            select max(v.fecha_inicio)
+            from (
+                values
+                    (sv.fec_recepcion),
+                    (sv.fec_entrada_real),
+                    (mvo.fec_factura_origen)
+            ) as v(fecha_inicio)
+        )
+        else sv.fec_compra
+    end as fec_inicio_stock,
+    case
+        when sv.fec_corte_stock is null then null
+        when sv.tpo_vo in ('7', '8', '08') then (
+            select max(v.fecha_inicio)
+            from (
+                values
+                    (case when sv.fec_recepcion is not null then datediff(day, sv.fec_recepcion, sv.fec_corte_stock) end),
+                    (case when sv.fec_entrada_real is not null then datediff(day, sv.fec_entrada_real, sv.fec_corte_stock) end),
+                    (case when mvo.fec_factura_origen is not null then datediff(day, mvo.fec_factura_origen, sv.fec_corte_stock) end)
+            ) as v(fecha_inicio)
+        )
+        when sv.fec_compra is null then null
+        else datediff(day, sv.fec_compra, sv.fec_corte_stock)
+    end as ud_dias_stock,
+    cast(1 as int) as ud_stock,
     can.id_canal_origen,
-    can.desc_canal_origen,
+    can.des_canal_origen,
     case
         when try_cast(sv.imp_compra as decimal(18, 2)) <= 1 then 'precio_compra_inferior_igual_1'
         when coalesce(can.no_contabiliza, cast(0 as bit)) = cast(1 as bit) then 'canal_origen_no_contabilizable'
@@ -26,13 +53,14 @@ select
     end as ind_contabiliza_stock,
     sv.imp_compra,
     sv.imp_costo,
-    cast(1 as int) as ud_unidades,
     sv.aud_dte_snapshot,
     sv.aud_tst_ingestion,
     sv.aud_tst_ultima_actualizacion
 from [wh_silver].[stg_qbi].[stock_vo] as sv
 left join [wh_silver].[stg_qbi].[vehiculos] as veh
     on veh.id_vehiculo = sv.id_vehiculo
+left join [wh_silver].[stg_qbi].[compras_vo] as mvo
+    on mvo.id_movimiento_compra = sv.id_movimiento_referencia
 outer apply (
     select top 1
         d.id_canal_origen

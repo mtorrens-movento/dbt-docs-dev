@@ -17,6 +17,7 @@ SELECT
         WHEN sv.fec_factura IS NULL OR sv.fec_corte_stock IS NULL THEN NULL
         ELSE ABS(DATEDIFF(DAY, sv.fec_factura, sv.fec_corte_stock))
     END AS ud_dias_stock,
+    CAST(1 AS INT) AS ud_stock,
     sv.fec_factura,
     sv.fec_recepcion,
     CASE
@@ -25,7 +26,6 @@ SELECT
     END AS imp_precio_venta_distribuidor,
     sv.imp_iva_compra AS imp_iva,
     sv.imp_precio_compra_total AS imp_total,
-    CAST(1 AS INT) AS ud_unidades,
     sv.id_vendedor_reserva,
     sv.id_cliente_reserva,
     sv.nom_cliente_reserva,

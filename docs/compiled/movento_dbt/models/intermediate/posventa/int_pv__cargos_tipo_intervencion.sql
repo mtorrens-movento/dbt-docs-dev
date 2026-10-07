@@ -40,7 +40,7 @@ columnas_agrupacion_marcas as (
 columnas_agrupaciones as (
     select
         id_agrupacion,
-        desc_agrupacion as nom_columna_usada
+        des_agrupacion as nom_columna_usada
     from [wh_silver].[stg_shp_mdm].[pv_cols_agrup_inter]
 ),
 
@@ -143,7 +143,7 @@ select
     d.des_articulo,
     d.aud_dte_snapshot,
     d.aud_tst_ingestion,
-    cast(coalesce(d.aud_tst_ingestion, cast(d.aud_dte_snapshot as datetime2(0)), cast('2026-10-07 10:54:30' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(d.aud_tst_ingestion, cast(d.aud_dte_snapshot as datetime2(0)), cast('2026-10-07 11:18:13' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from dedup d
 inner join [wh_silver].[stg_shp_mdm].[pv_tipos_inter] ti
     on ti.id_tipo_intervencion = d.id_tipo_intervencion

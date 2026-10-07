@@ -13,12 +13,12 @@ SELECT
 	vn.cod_familia,
 	vn.cod_modelo,
 	vn.ud_dias_stock,
+	vn.ud_stock,
 	vn.fec_factura,
 	vn.fec_recepcion,
 	vn.imp_precio_venta_distribuidor,
 	vn.imp_iva,
 	vn.imp_total,
-	vn.ud_unidades,
 	vn.id_vendedor_reserva,
 	vn.id_cliente_reserva,
 	vn.nom_cliente_reserva,
@@ -27,7 +27,7 @@ SELECT
 	vn.des_motivo_contabiliza_stock,
 	vn.ind_contabiliza_stock,
 	CAST(
-		'2026-10-07 12:54:30'
+		'2026-10-07 13:18:13'
 		AS DATETIME2(0)
 	) AS _gold_load_ts
 FROM [wh_silver].[int_vn].[stock_enriquecido] AS vn

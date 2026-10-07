@@ -7,7 +7,7 @@ with source_data as (
 , '(en blanco)') as id_familia_quiter_raw,
 		
     nullif(ltrim(rtrim(cast([desc_familia] as varchar(255)))), '')
- as desc_familia_raw,
+ as des_familia_raw,
 		
     nullif(ltrim(rtrim(cast([fec_ini] as varchar(100)))), '')
  as fec_ini_raw,
@@ -23,7 +23,7 @@ with source_data as (
 typed as (
 	select
 		id_familia_quiter_raw as id_familia_quiter,
-		desc_familia_raw as desc_familia,
+		des_familia_raw as des_familia,
 		
     coalesce(
         try_cast(fec_ini_raw as date),
@@ -44,7 +44,7 @@ typed as (
 
 select distinct
 	id_familia_quiter,
-	desc_familia,
+	des_familia,
 	fec_ini,
 	fec_fin,
 	id_familia

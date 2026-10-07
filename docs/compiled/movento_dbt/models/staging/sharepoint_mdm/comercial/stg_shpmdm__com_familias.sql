@@ -7,7 +7,7 @@ with source_data as (
  as id_familia_raw,
 		
     nullif(ltrim(rtrim(cast([desc_familia] as varchar(255)))), '')
- as desc_familia_raw,
+ as des_familia_raw,
 		
     nullif(ltrim(rtrim(cast([id_marca] as varchar(100)))), '')
  as id_marca_raw,
@@ -29,7 +29,7 @@ with source_data as (
 typed as (
 	select
 		try_cast(id_familia_raw as int) as id_familia,
-		desc_familia_raw as desc_familia,
+		des_familia_raw as des_familia,
 		try_cast(id_marca_raw as int) as id_marca,
 		try_cast(id_subsegmento_raw as int) as id_subsegmento,
 		cod_familia_raw as cod_familia,
@@ -40,7 +40,7 @@ typed as (
 
 select distinct
 	id_familia,
-	desc_familia,
+	des_familia,
 	id_marca,
 	id_subsegmento,
 	cod_familia,

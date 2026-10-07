@@ -7,7 +7,7 @@ with source_data as (
  as id_agrupacion_raw,
 		
     nullif(ltrim(rtrim(cast([desc_agrupacion] as varchar(255)))), '')
- as desc_agrupacion_raw,
+ as des_agrupacion_raw,
 		
     nullif(ltrim(rtrim(cast([codigo] as varchar(100)))), '')
  as codigo_raw,
@@ -29,7 +29,7 @@ with source_data as (
 typed as (
 	select
 		try_cast(id_agrupacion_raw as int) as id_agrupacion,
-		desc_agrupacion_raw as desc_agrupacion,
+		des_agrupacion_raw as des_agrupacion,
 		codigo_raw as codigo,
 		try_cast(id_tipo_intervencion_raw as int) as id_tipo_intervencion,
 		try_cast(id_fabricante_raw as int) as id_fabricante,
@@ -52,7 +52,7 @@ typed as (
 
 select distinct
 	id_agrupacion,
-	desc_agrupacion,
+	des_agrupacion,
 	codigo,
 	id_tipo_intervencion,
 	id_fabricante,

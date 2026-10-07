@@ -10,7 +10,7 @@ with source_data as (
  as id_subcanal_venta_raw,
 		
     nullif(ltrim(rtrim(cast([desc_subcanal_venta] as varchar(255)))), '')
- as desc_subcanal_venta_raw,
+ as des_subcanal_venta_raw,
 		
     nullif(ltrim(rtrim(cast([fec_ini] as varchar(100)))), '')
  as fec_ini_raw,
@@ -24,7 +24,7 @@ typed as (
 	select
 		id_tipo_venta_raw as id_tipo_venta,
 		try_cast(id_subcanal_venta_raw as int) as id_subcanal_venta,
-		desc_subcanal_venta_raw as desc_subcanal_venta,
+		des_subcanal_venta_raw as des_subcanal_venta,
 		
     coalesce(
         try_cast(fec_ini_raw as date),
@@ -45,7 +45,7 @@ typed as (
 select distinct
 	id_tipo_venta,
 	id_subcanal_venta,
-	desc_subcanal_venta,
+	des_subcanal_venta,
 	fec_ini,
 	fec_fin
 from typed

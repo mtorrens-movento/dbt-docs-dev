@@ -20,21 +20,21 @@ SELECT
     ven.id_vendedor,
     ven.nom_vendedor,
     ven.id_tipo_vendedor,
-    ven.desc_tipo_vendedor,
+    ven.des_tipo_vendedor,
     vn.id_vehiculo,
     vn.tpo_venta,
     vn.des_tipo_venta,
     vn.id_cuenta_cliente,
     can.id_canal_venta,
-    can.desc_canal_venta,
+    can.des_canal_venta,
     CASE
         WHEN vn.id_cuenta_cliente = 'K110012' THEN 'cliente_stern'
-        WHEN UPPER(COALESCE(ven.desc_tipo_vendedor, '')) LIKE '%AUTOMATRI%' THEN 'tipo_vendedor_automatricula'
+        WHEN UPPER(COALESCE(ven.des_tipo_vendedor, '')) LIKE '%AUTOMATRI%' THEN 'tipo_vendedor_automatricula'
         ELSE NULL
     END AS des_motivo_automatricula,
     CASE
         WHEN vn.id_cuenta_cliente = 'K110012' THEN CAST(1 AS INT)
-        WHEN UPPER(COALESCE(ven.desc_tipo_vendedor, '')) LIKE '%AUTOMATRI%' THEN CAST(1 AS INT)
+        WHEN UPPER(COALESCE(ven.des_tipo_vendedor, '')) LIKE '%AUTOMATRI%' THEN CAST(1 AS INT)
         ELSE CAST(0 AS INT)
     END AS ind_automatricula,
     CASE
@@ -55,7 +55,6 @@ SELECT
     vn.aud_tst_ingestion,
     vn.aud_tst_ultima_actualizacion
 FROM ventas_vn AS vn
--- Obtiene version más reciente del vendedor si es que existe, sino devuelve como left join
 OUTER APPLY (
     SELECT TOP 1
         d.id_ven_org
@@ -72,7 +71,7 @@ OUTER APPLY (
         v.id_vendedor,
         v.nom_vendedor,
         v.id_tipo_vendedor,
-        v.desc_tipo_vendedor,
+        v.des_tipo_vendedor,
         v.no_contabiliza
     FROM [wh_silver].[stg_shp_mdm].[com_vendedores] AS v
     WHERE v.id_vendedor = ven_dic.id_ven_org

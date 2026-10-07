@@ -4,8 +4,8 @@
 
 
 
-select ud_unidades
+select ud_stock
 from [wh_gold].[vo].[facts_stock]
-where ud_unidades is null
+where ud_stock is null
 
 
