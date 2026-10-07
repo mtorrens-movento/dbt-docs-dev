@@ -25,7 +25,7 @@ SELECT
     imp_recambios,
 
     CAST(
-        '2026-10-07 15:46:54'
+        '2026-10-07 16:16:01'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[int_posventa].[or_cargo]

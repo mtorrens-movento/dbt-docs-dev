@@ -33,7 +33,7 @@ final_select as (
  as id_fila_tecnica,
         
     nullif(ltrim(rtrim(cast(referencia as varchar(255)))), '')
- as id_movimiento_referencia,
+ as id_movimiento_compra,
         
     nullif(ltrim(rtrim(cast(idv as varchar(255)))), '')
  as id_vehiculo,
@@ -145,5 +145,5 @@ final_select as (
 
 select
     final_select.*,
-    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-07 13:46:54' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-07 14:16:01' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from final_select
