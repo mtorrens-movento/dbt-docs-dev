@@ -23,7 +23,7 @@ WITH diccionario AS (
 SELECT
     d.tipo_mo AS tpo_mano_obra,
     d.id_servicio_taller AS id_servicio,
-    s.desc_servicio_taller AS nom_servicio,
+    s.des_servicio_taller AS nom_servicio,
     CASE
         WHEN d.id_servicio_taller IN (7, 8, 36, 38, 39) THEN 1
         ELSE 0

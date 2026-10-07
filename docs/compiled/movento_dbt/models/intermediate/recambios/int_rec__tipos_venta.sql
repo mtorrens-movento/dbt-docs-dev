@@ -22,7 +22,7 @@ SELECT
     d.id_canal_venta AS id_canal,
     m.canal_venta AS nom_canal,
     m.id_agrup_canal AS id_agrupacion_canal,
-    m.desc_agrup_canal AS nom_agrupacion_canal
+    m.des_agrup_canal AS nom_agrupacion_canal
 FROM diccionario d
 LEFT JOIN [wh_silver].[stg_shp_mdm].[rec_canales_venta] m
     ON m.id_canal_venta = d.id_canal_venta

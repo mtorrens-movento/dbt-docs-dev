@@ -32,11 +32,11 @@ tipos AS (
 SELECT
     t.tipo_or AS tpo_or,
     s.id_subseccion_taller AS id_subseccion,
-    sec.desc_subseccion AS nom_subseccion,
+    sec.des_subseccion AS nom_subseccion,
     sec.id_seccion,
-    sec.desc_seccion AS nom_seccion,
+    sec.des_seccion AS nom_seccion,
     c.id_canal_venta AS id_canal,
-    m.desc_canal_venta AS nom_canal,
+    m.des_canal_venta AS nom_canal,
     m.orden_canal AS num_orden_canal
 FROM tipos t
 LEFT JOIN subseccion s
