@@ -21,7 +21,7 @@ SELECT
     des_info_adicional_3,
     des_info_adicional_4,
         CAST(
-        '2026-10-07 09:07:40'
+        '2026-10-07 10:39:30'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 

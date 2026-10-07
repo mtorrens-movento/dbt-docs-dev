@@ -32,7 +32,7 @@ SELECT
 	vo.imp_beneficio,
 
 	CAST(
-		'2026-10-07 09:07:40'
+		'2026-10-07 10:39:30'
 		AS DATETIME2(0)
 	) AS _gold_load_ts
 FROM [wh_silver].[int_vo].[ventas_enriquecidas] AS vo
