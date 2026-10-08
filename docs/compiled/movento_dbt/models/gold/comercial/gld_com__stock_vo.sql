@@ -22,7 +22,7 @@ select
 	vo.imp_compra,
 	vo.imp_costo,
 	cast(
-		'2026-10-07 16:16:01'
+		'2026-10-08 13:00:20'
 		as datetime2(0)
 	) as _gold_load_ts
 from [wh_silver].[int_comercial].[stock_vo_enriquecido] as vo

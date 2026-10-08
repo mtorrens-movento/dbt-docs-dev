@@ -7,7 +7,7 @@ where (
     or
     fec_apertura_or < cast('1950-01-01' as date)
     or
-    fec_apertura_or > cast('2026-10-07' as date)
+    fec_apertura_or > cast('2026-10-08' as date)
 )
   and fec_apertura_or is not null
 

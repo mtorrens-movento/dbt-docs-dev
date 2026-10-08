@@ -51,7 +51,7 @@ SELECT
     id_referencia,
     id_centro_presupuestario,
         CAST(
-        '2026-10-07 16:16:01'
+        '2026-10-08 13:00:20'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM movimientos
