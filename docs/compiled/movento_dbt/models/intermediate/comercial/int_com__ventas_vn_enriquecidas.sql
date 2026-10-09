@@ -13,8 +13,6 @@ select
     vn.fec_venta,
     vn.id_concesionario,
     vn.nom_concesionario,
-    vn.id_concesionario_venta,
-    vn.nom_concesionario_venta,
     vn.id_vendedor as id_vendedor_quiter,
     vn.nom_vendedor as nom_vendedor_quiter,
     ven.id_vendedor,
@@ -25,16 +23,22 @@ select
     vn.tpo_venta,
     vn.des_tipo_venta,
     vn.id_cuenta_cliente,
+    subcan.id_subcanal_venta,
+    subcan.des_subcanal_venta,
     can.id_canal_venta,
     can.des_canal_venta,
     case
         when vn.id_cuenta_cliente = 'K110012' then 'cliente_stern'
         when upper(coalesce(ven.des_tipo_vendedor, '')) like '%AUTOMATRI%' then 'tipo_vendedor_automatricula'
+        when upper(coalesce(subcan.des_subcanal_venta, '')) like '%AUTOMATRI%' then 'subcanal_automatricula'
+        when upper(coalesce(can.des_canal_venta, '')) like '%AUTOMATRI%' then 'canal_automatricula'
         else null
     end as des_motivo_automatricula,
     case
         when vn.id_cuenta_cliente = 'K110012' then cast(1 as int)
         when upper(coalesce(ven.des_tipo_vendedor, '')) like '%AUTOMATRI%' then cast(1 as int)
+        when upper(coalesce(subcan.des_subcanal_venta, '')) like '%AUTOMATRI%' then cast(1 as int)
+        when upper(coalesce(can.des_canal_venta, '')) like '%AUTOMATRI%' then cast(1 as int)
         else cast(0 as int)
     end as ind_automatricula,
     case

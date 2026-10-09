@@ -12,6 +12,10 @@ SELECT
         WHEN sa.cat_antiguedad IN ('5-24 a 36', '6-> 36') THEN 'muerto_2_anos'
         ELSE 'desconocido'
     END AS cat_estado_stock,
+    sa.cat_articulo,
+    sa.des_articulo,
+    COALESCE(sa.ud_existencias, 0) AS ud_existencias,
+    sa.imp_costo_medio_unitario,
     COALESCE(sa.ud_existencias, 0) * COALESCE(sa.imp_costo_medio_unitario, 0) AS imp_stock,
     sa.cod_marca_contable,
     sa.des_marca_contable,

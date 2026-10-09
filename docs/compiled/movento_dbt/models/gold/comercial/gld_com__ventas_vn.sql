@@ -7,8 +7,6 @@ select
 	vn.fec_venta,
 	vn.id_concesionario,
 	vn.nom_concesionario,
-	vn.id_concesionario_venta,
-	vn.nom_concesionario_venta,
 	vn.id_vendedor,
 	vn.nom_vendedor,
 	vn.id_tipo_vendedor,
@@ -27,7 +25,7 @@ select
 	vn.imp_venta_vn,
 	vn.imp_beneficio,
 	cast(
-		'2026-10-09 13:20:57'
+		'2026-10-09 14:13:20'
 		as datetime2(0)
 	) as _gold_load_ts
 from [wh_silver].[int_comercial].[ventas_vn_enriquecidas] as vn

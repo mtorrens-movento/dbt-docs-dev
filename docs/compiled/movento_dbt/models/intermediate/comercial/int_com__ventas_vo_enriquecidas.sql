@@ -13,8 +13,6 @@ select
     vo.fec_venta,
     vo.id_concesionario,
     vo.nom_concesionario,
-    vo.id_concesionario_venta,
-    vo.nom_concesionario_venta,
     vo.id_vendedor as id_vendedor_quiter,
     vo.nom_vendedor as nom_vendedor_quiter,
     ven.id_vendedor,
@@ -25,6 +23,8 @@ select
     vo.tpo_venta,
     vo.des_tipo_venta,
     vo.id_cuenta_cliente,
+    subcan.id_subcanal_venta,
+    subcan.des_subcanal_venta,
     can.id_canal_venta,
     can.des_canal_venta,
     case

@@ -31,7 +31,7 @@ SELECT
     ROUND(imp_stock_muerto_1_ano + imp_stock_muerto_2_anos, 2) AS imp_stock_muerto,
     imp_stock_total,
     CAST(
-        '2026-10-09 13:20:57'
+        '2026-10-09 14:13:20'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM agregado
