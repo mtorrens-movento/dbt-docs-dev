@@ -4,7 +4,7 @@ with source_data as (
     select *
     
         from [lh_bronze].[qbi_incremental].[ftavnbi_pr]
-        where _snapshot_date > (select max(aud_dte_snapshot) from [wh_silver].[stg_qbi].[ventas_vn])
+        where _snapshot_date >= (select max(aud_dte_snapshot) from [wh_silver].[stg_qbi].[ventas_vn])
           and _ingestion_tst > (select max(aud_tst_ingestion) from [wh_silver].[stg_qbi].[ventas_vn])
     
 ),
@@ -116,5 +116,5 @@ final_select as (
 
 select
     final_select.*,
-    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-08 11:00:20' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
+    cast(coalesce(final_select.aud_tst_ingestion, cast(final_select.aud_dte_snapshot as datetime2(0)), cast('2026-10-09 11:20:57' as datetime2(0))) as datetime2(0)) as aud_tst_ultima_actualizacion
 from final_select
