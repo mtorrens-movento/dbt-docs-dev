@@ -22,7 +22,7 @@ SELECT
     ind_venta_exterior,
 
     CAST(
-        '2026-10-09 14:13:20'
+        '2026-10-09 14:20:25'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[int_recambios].[ventas_almacen]
