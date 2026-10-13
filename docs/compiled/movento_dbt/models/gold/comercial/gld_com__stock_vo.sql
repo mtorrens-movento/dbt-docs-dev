@@ -17,12 +17,14 @@ select
 	vo.ud_stock,
 	vo.id_canal_origen,
 	vo.des_canal_origen,
+	vo.id_tipo_stock_vo,
+	vo.des_tipo_stock_vo,
 	vo.des_motivo_contabiliza_stock,
 	vo.ind_contabiliza_stock,
 	vo.imp_compra,
 	vo.imp_costo,
 	cast(
-		'2026-10-13 08:55:46'
+		'2026-10-13 09:18:10'
 		as datetime2(0)
 	) as _gold_load_ts
 from [wh_silver].[int_comercial].[stock_vo_enriquecido] as vo

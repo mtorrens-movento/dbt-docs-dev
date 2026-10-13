@@ -41,14 +41,18 @@ select
     cast(1 as int) as ud_stock,
     can.id_canal_origen,
     can.des_canal_origen,
+    tipo_stock.id_tipo_stock_vo,
+    tipo_stock.des_tipo_stock_vo,
     case
         when try_cast(sv.imp_compra as decimal(18, 2)) <= 1 then 'precio_compra_inferior_igual_1'
         when coalesce(can.no_contabiliza, cast(0 as bit)) = cast(1 as bit) then 'canal_origen_no_contabilizable'
+        when coalesce(tipo_stock.no_contabiliza, cast(0 as bit)) = cast(1 as bit) then 'tipo_stock_no_contabilizable'
         else null
     end as des_motivo_contabiliza_stock,
     case
         when try_cast(sv.imp_compra as decimal(18, 2)) <= 1 then cast(0 as int)
         when coalesce(can.no_contabiliza, cast(0 as bit)) = cast(1 as bit) then cast(0 as int)
+        when coalesce(tipo_stock.no_contabiliza, cast(0 as bit)) = cast(1 as bit) then cast(0 as int)
         else cast(1 as int)
     end as ind_contabiliza_stock,
     sv.imp_compra,
@@ -74,3 +78,16 @@ outer apply (
 ) as dic
 left join [wh_silver].[stg_shp_mdm].[com_canales_origen] as can
     on can.id_canal_origen = dic.id_canal_origen
+outer apply (
+    select top 1
+        d.id_tipo_stock_vo
+    from [wh_silver].[stg_shp_mdm].[dic_com_tipo_vo_tipo_stock] as d
+    where d.tipo_vo = sv.tpo_vo
+      and (d.fec_ini is null or d.fec_ini <= cast(sv.fec_corte_stock as date))
+      and (d.fec_fin is null or d.fec_fin >= cast(sv.fec_corte_stock as date))
+    order by
+        coalesce(d.fec_ini, cast('1900-01-01' as date)) desc,
+        coalesce(d.fec_fin, cast('9999-12-31' as date)) desc
+) as dic_tipo_stock
+left join [wh_silver].[stg_shp_mdm].[com_tipo_stock_vo] as tipo_stock
+    on tipo_stock.id_tipo_stock_vo = dic_tipo_stock.id_tipo_stock_vo
