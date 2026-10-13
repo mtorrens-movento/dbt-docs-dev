@@ -28,7 +28,7 @@ SELECT
     ud_dias_facturacion,
 
     CAST(
-        '2026-10-09 14:20:25'
+        '2026-10-13 08:29:55'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[int_posventa].[ordenes_reparacion]

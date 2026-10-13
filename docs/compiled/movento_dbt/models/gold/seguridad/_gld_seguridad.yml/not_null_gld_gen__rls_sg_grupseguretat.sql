@@ -4,8 +4,8 @@
 
 
 
-select name_sg
+select grupseguretat
 from [wh_gold].[seguridad].[rls_sg]
-where name_sg is null
+where grupseguretat is null
 
 
