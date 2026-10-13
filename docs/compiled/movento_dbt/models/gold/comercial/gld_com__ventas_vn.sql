@@ -25,7 +25,7 @@ select
 	vn.imp_venta_vn,
 	vn.imp_beneficio,
 	cast(
-		'2026-10-13 13:09:49'
+		'2026-10-13 16:31:57'
 		as datetime2(0)
 	) as _gold_load_ts
 from [wh_silver].[int_comercial].[ventas_vn_enriquecidas] as vn

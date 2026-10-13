@@ -14,15 +14,23 @@ SELECT
     cod_marca_contable AS cod_marca,
     cod_marca_almacen,
     tpo_venta,
+    id_canal_venta,
+    nom_canal_venta,
+    id_zona,
+    des_zona,
+    id_tipo_zona,
+    des_tipo_zona,
 
     ud_unidades_venta,
     imp_venta,
     imp_venta_pvp,
     imp_venta_coste,
+    des_motivo_contabiliza_venta,
+    ind_contabiliza_venta,
     ind_venta_exterior,
 
     CAST(
-        '2026-10-13 13:09:49'
+        '2026-10-13 16:31:57'
         AS DATETIME2(0)
     ) AS _gold_load_ts
 FROM [wh_silver].[int_recambios].[ventas_almacen]

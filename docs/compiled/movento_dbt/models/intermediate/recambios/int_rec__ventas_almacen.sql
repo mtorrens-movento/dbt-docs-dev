@@ -25,7 +25,7 @@ SELECT
 
     v.id_almacen,
     v.cod_marca_contable,
-    TRY_CAST(v.cod_marca_almacen AS INT) AS cod_marca_almacen,
+    v.cod_marca_almacen,
     v.tpo_venta,
 
     v.ud_unidades_venta,
@@ -33,6 +33,31 @@ SELECT
     ROUND(v.ud_unidades_venta * v.imp_pvp_unitario * (1 - v.rat_descuento_deferencia / 100), 2)
         AS imp_venta_pvp,
     v.imp_costo_linea AS imp_venta_coste,
+
+    canal.id_canal_venta,
+    canal.nom_canal_venta,
+    zona.id_zona,
+    zona.des_zona,
+    zona.id_tipo_zona,
+    zona.des_tipo_zona,
+    CASE
+        WHEN COALESCE(canal.no_contabiliza, CAST(0 AS BIT)) = CAST(1 AS BIT)
+            THEN 'canal_venta_no_contabilizable'
+        WHEN COALESCE(zona.no_contabiliza_zona, CAST(0 AS BIT)) = CAST(1 AS BIT)
+            THEN 'zona_no_contabilizable'
+        WHEN COALESCE(zona.no_contabiliza_tipo_zona, CAST(0 AS BIT)) = CAST(1 AS BIT)
+            THEN 'tipo_zona_no_contabilizable'
+        ELSE NULL
+    END AS des_motivo_contabiliza_venta,
+    CASE
+        WHEN COALESCE(canal.no_contabiliza, CAST(0 AS BIT)) = CAST(1 AS BIT)
+            THEN CAST(0 AS INT)
+        WHEN COALESCE(zona.no_contabiliza_zona, CAST(0 AS BIT)) = CAST(1 AS BIT)
+            THEN CAST(0 AS INT)
+        WHEN COALESCE(zona.no_contabiliza_tipo_zona, CAST(0 AS BIT)) = CAST(1 AS BIT)
+            THEN CAST(0 AS INT)
+        ELSE CAST(1 AS INT)
+    END AS ind_contabiliza_venta,
 
     CASE
         WHEN COALESCE(v.ref_ind_salida_taller, 'N') = 'N'
@@ -43,3 +68,38 @@ SELECT
 FROM [wh_silver].[stg_qbi].[ventas_almacen] v
 LEFT JOIN [wh_silver].[int_recambios].[tipos_venta] t
     ON t.tpo_venta = v.tpo_venta
+OUTER APPLY (
+    SELECT TOP 1
+        m.no_contabiliza,
+        m.id_canal_venta,
+        m.canal_venta AS nom_canal_venta
+    FROM [wh_silver].[stg_shp_mdm].[dic_rec_tipo_venta_canal_venta] d
+    LEFT JOIN [wh_silver].[stg_shp_mdm].[rec_canales_venta] m
+        ON m.id_canal_venta = d.id_canal_venta
+    WHERE d.tipo_venta = v.tpo_venta
+      AND (d.fec_ini IS NULL OR d.fec_ini <= CAST(v.fec_movimiento AS DATE))
+      AND (d.fec_fin IS NULL OR d.fec_fin >= CAST(v.fec_movimiento AS DATE))
+    ORDER BY
+        COALESCE(d.fec_ini, CAST('1900-01-01' AS DATE)) DESC,
+        COALESCE(d.fec_fin, CAST('9999-12-31' AS DATE)) DESC
+) canal
+OUTER APPLY (
+    SELECT TOP 1
+        z.id_zona,
+        z.des_zona,
+        z.id_tipo_zona,
+        tz.des_tipo_zona,
+        z.no_contabiliza AS no_contabiliza_zona,
+        tz.no_contabiliza AS no_contabiliza_tipo_zona
+    FROM [wh_silver].[stg_shp_mdm].[dic_rec_ruta_zona] d
+    LEFT JOIN [wh_silver].[stg_shp_mdm].[rec_zonas] z
+        ON z.id_zona = d.id_zona
+    LEFT JOIN [wh_silver].[stg_shp_mdm].[rec_tipos_zonas] tz
+        ON tz.id_tipo_zona = z.id_tipo_zona
+    WHERE d.id_ruta = v.cat_ruta
+      AND (d.fec_ini IS NULL OR d.fec_ini <= CAST(v.fec_movimiento AS DATE))
+      AND (d.fec_fin IS NULL OR d.fec_fin >= CAST(v.fec_movimiento AS DATE))
+    ORDER BY
+        COALESCE(d.fec_ini, CAST('1900-01-01' AS DATE)) DESC,
+        COALESCE(d.fec_fin, CAST('9999-12-31' AS DATE)) DESC
+) zona
