@@ -27,7 +27,7 @@ select
 	rep.ud_repris_con_chatarra,
 	rep.ud_repris_sin_chatarra,
 	cast(
-		'2026-10-13 09:18:10'
+		'2026-10-13 09:55:40'
 		as datetime2(0)
 	) as _gold_load_ts
 from [wh_silver].[int_comercial].[repris] as rep
